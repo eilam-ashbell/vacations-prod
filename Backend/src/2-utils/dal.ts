@@ -13,7 +13,7 @@ console.log("We're connected to MySQL");
 
 function execute(sql: string): Promise<any> {
 
-    return new Promise<any>((resolve, reject) => { // To Promisify an asynchronous function
+    return new Promise<any>((resolve, reject) => {
 
         // Execute the sql on MySQL:
         connection.query(sql, (err, result) => {

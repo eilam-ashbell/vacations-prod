@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
+import verifyAdmin from "../3-middleware/verify-admin";
+import verifyLoggedIn from "../3-middleware/verify-logged-in";
 import VacationModel from "../4-models/vacation-model";
-import vacationLogic from "../5-logic/vacationLogic";
+import vacationLogic from "../5-logic/vacation-logic";
 
 const router = express.Router();
 
@@ -20,6 +22,7 @@ router.get(
 // GET all vacation for a specific user with followers data
 router.get(
     "/api/vacations/:userId",
+    verifyLoggedIn,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             const userId = +request.params.userId;
@@ -36,6 +39,7 @@ router.get(
 // Add a vacation
 router.post(
     "/api/vacations",
+    verifyAdmin,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             // get image file from the front
@@ -53,6 +57,7 @@ router.post(
 // Update a vacation
 router.put(
     "/api/vacations/:vacationId",
+    verifyAdmin,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             // get image file from the front
@@ -73,6 +78,7 @@ router.put(
 // Delete a vacation
 router.delete(
     "/api/vacations/:vacationId",
+    verifyAdmin,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             const vacationId = +request.params.vacationId;

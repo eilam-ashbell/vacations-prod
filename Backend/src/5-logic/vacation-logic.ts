@@ -1,6 +1,6 @@
 import { OkPacket } from "mysql";
 import dal from "../2-utils/dal";
-import { IdNotFoundError } from "../4-models/client-errors";
+import { IdNotFoundError, ValidationError } from "../4-models/client-errors";
 import VacationFollowersModel from "../4-models/vacation-followers-model";
 import VacationModel from "../4-models/vacation-model";
 import { v4 as uuid } from "uuid";
@@ -32,6 +32,11 @@ async function getAllVacationsForUser(
 
 // Add a vacation
 async function addVacation(vacation: VacationModel): Promise<VacationModel> {
+
+    // Validate vacation data
+    const error = vacation.validate();
+    if (error) throw new ValidationError(error)
+
     // Handle image
     if (vacation.image) {
         const extension = vacation.image.name.substring(
@@ -41,11 +46,16 @@ async function addVacation(vacation: VacationModel): Promise<VacationModel> {
         await vacation.image.mv(config.imagesFolderPath + vacation.imageName); // move image to images folder
         delete vacation.image; // delete image before saving
     }
+
     // Add to DB
     const sql = `INSERT INTO vacations
-                    VALUES(DEFAULT, '${vacation.destination}', '${vacation.description}',
-                     '${vacation.imageName}', '${vacation.startDate}', '${vacation.endDate}',
-                     '${vacation.price}')`;
+                    VALUES(DEFAULT, 
+                    '${vacation.destination}', 
+                    '${vacation.description}',
+                    '${vacation.imageName}', 
+                    '${vacation.startDate}', 
+                    '${vacation.endDate}',
+                    '${vacation.price}')`;
     const result: OkPacket = await dal.execute(sql);
     vacation.vacationId = result.insertId;
     return vacation;
@@ -53,6 +63,11 @@ async function addVacation(vacation: VacationModel): Promise<VacationModel> {
 
 // Update a vacation
 async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
+    
+    // Validate
+    const error = vacation.validate();
+    if (error) throw new ValidationError(error)
+
     // Handle image
     if (vacation.image) {
         await safeDelete(config.imagesFolderPath + vacation.imageName); // Delete the previous image
