@@ -23,7 +23,9 @@ router.get(
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             const userId = +request.params.userId;
-            const vacations = await vacationLogic.getAllVacationsForUser(userId);
+            const vacations = await vacationLogic.getAllVacationsForUser(
+                userId
+            );
             response.json(vacations);
         } catch (err: any) {
             next(err);
@@ -36,9 +38,12 @@ router.post(
     "/api/vacations",
     async (request: Request, response: Response, next: NextFunction) => {
         try {
+            // get image file from the front
+            request.body.image = request.files?.image;
+
             const vacation = new VacationModel(request.body);
             const addedVacation = await vacationLogic.addVacation(vacation);
-            response.json(addedVacation);
+            response.status(201).json(addedVacation);
         } catch (err: any) {
             next(err);
         }
@@ -50,9 +55,14 @@ router.put(
     "/api/vacations/:vacationId",
     async (request: Request, response: Response, next: NextFunction) => {
         try {
+            // get image file from the front
+            request.body.image = request.files?.image;
+            // assign vacation ID from URL params to vacation object
             request.body.vacationId = +request.params.vacationId;
             const vacation = new VacationModel(request.body);
-            const updatedVacation = await vacationLogic.updateVacation(vacation);
+            const updatedVacation = await vacationLogic.updateVacation(
+                vacation
+            );
             response.json(updatedVacation);
         } catch (err: any) {
             next(err);
