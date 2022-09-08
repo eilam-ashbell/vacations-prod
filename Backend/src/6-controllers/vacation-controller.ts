@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
+import dal from "../2-utils/dal";
 import verifyAdmin from "../3-middleware/verify-admin";
 import verifyLoggedIn from "../3-middleware/verify-logged-in";
 import VacationModel from "../4-models/vacation-model";
@@ -7,25 +8,25 @@ import vacationLogic from "../5-logic/vacation-logic";
 const router = express.Router();
 
 // GET all vacations data
-router.get(
-    "/api/vacations",
-    async (request: Request, response: Response, next: NextFunction) => {
-        try {
-            const vacations = await vacationLogic.getAllVacations();
-            response.json(vacations);
-        } catch (err: any) {
-            next(err);
-        }
-    }
-);
+// router.get(
+//     "/api/vacations",
+//     async (request: Request, response: Response, next: NextFunction) => {
+//         try {
+//             const vacations = await vacationLogic.getAllVacations();
+//             response.json(vacations);
+//         } catch (err: any) {
+//             next(err);
+//         }
+//     }
+// );
 
 // GET all vacation for a specific user with followers data
 router.get(
-    "/api/vacations/:useruuid",
+    "/api/vacations",
     verifyLoggedIn,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
-            const userUuid = request.params.useruuid;
+            const userUuid = request.body?.userUuid;
             const vacations = await vacationLogic.getAllVacationsForUser(
                 userUuid
             );
@@ -89,4 +90,55 @@ router.delete(
         }
     }
 );
+
+// Assign follow for a vacation
+router.post(
+    "/api/followers",
+    verifyLoggedIn,
+    async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const vacationId = request.body?.vacationId;
+            const userUuid = request.body?.userUuid;
+            const follower = await vacationLogic.followVacation(
+                vacationId,
+                userUuid
+            );
+            response.status(201).json(follower);
+        } catch (err: any) {
+            next(err);
+        }
+    }
+);
+
+// Assign un-follow for a vacation
+router.delete(
+    "/api/followers",
+    verifyLoggedIn,
+    async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const vacationId = request.body?.vacationId;
+            const userUuid = request.body?.userUuid;
+            await vacationLogic.unFollowVacation(vacationId, userUuid);
+            response.sendStatus(204);
+        } catch (err: any) {
+            next(err);
+        }
+    }
+);
+
+// GET vacations data for report
+router.get(
+    "/api/vacations/report",
+    verifyAdmin,
+    async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const vacationsData =
+                await vacationLogic.getVacationsDataToReport();
+            response.json(vacationsData);
+        } catch (err: any) {
+            next(err);
+        }
+    }
+);
+
 export default router;
