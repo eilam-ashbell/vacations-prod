@@ -6,33 +6,45 @@ import vacationController from "./6-controllers/vacation-controller";
 import config from "./2-utils/config";
 import expressFileUpload from "express-fileupload";
 import authController from "./6-controllers/auth-controller";
+import sanitize from "./3-middleware/sanitize"
+import expressRateLimit from "express-rate-limit"
 
 
-// create server object
+// Create server object
 const server = express();
 
-// allow cors
+// Securing DoS attacks
+server.use("/api/", expressRateLimit({
+    windowMs: 100, // Window time
+    max: 1, // Max request per window time
+    message: "Too many requests" // Message to alert when detecting more then max requests over window time
+}))
+
+// Allow cors
 server.use(cors());
 
-// read the body json object
+// Read the body json object
 server.use(express.json());
 
-//  auth
+// Sanitize tags from requests
+server.use(sanitize)
+
+// Auth
 server.use("/", authController)
 
-// handle files
+// Handle files
 server.use(expressFileUpload())
 
-// routes requests to controllers
+// Routes requests to controllers
 server.use("/", vacationController);
 
-// routes requests to controllers
+// Routes requests to controllers
 server.use("/", authController);
 
-// route not found
+// Route not found
 server.use("*", routeNotFound);
 
-// catch all middleware
+// Catch all middleware
 server.use(catchAll);
 
 server.listen(config.port, () => console.log("Listening on http://localhost:" + config.port));

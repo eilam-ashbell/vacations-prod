@@ -9,24 +9,17 @@ import config from "../2-utils/config";
 
 // GET all vacations data
 async function getAllVacations(): Promise<VacationModel[]> {
-    const sql = `SELECT * FROM vacations`;
-    const vacations = await dal.execute(sql);
+    const sql = "SELECT * FROM vacations";
+    const vacations = await dal.execute(sql, []);
     return vacations;
 }
 
 // GET all vacation for a specific user with followers data
 async function getAllVacationsForUser(
-    userId: number
+    userUuid: string
 ): Promise<VacationFollowersModel[]> {
-    const sql = `SELECT DISTINCT V.*,
-	                EXISTS(SELECT * FROM followers 
-                    WHERE vacationId = F.vacationId AND userId = ${userId}) AS isFollowing,
-	                COUNT(F.userId) AS followersCount
-                    FROM vacations as V LEFT JOIN followers as F
-                    ON V.vacationId = F.vacationId
-                    GROUP BY vacationId
-                    ORDER BY isFollowing DESC`;
-    const vacations = await dal.execute(sql);
+    const sql = "SELECT DISTINCT V.*, EXISTS(SELECT * FROM followers WHERE vacationId = F.vacationId AND userId = (SELECT userId FROM users WHERE userUuid = ?)) AS isFollowing, COUNT(F.userId) AS followersCount FROM vacations as V LEFT JOIN followers as F ON V.vacationId = F.vacationId GROUP BY vacationId ORDER BY isFollowing DESC";
+    const vacations = await dal.execute(sql, [userUuid]);
     return vacations;
 }
 
@@ -48,15 +41,8 @@ async function addVacation(vacation: VacationModel): Promise<VacationModel> {
     }
 
     // Add to DB
-    const sql = `INSERT INTO vacations
-                    VALUES(DEFAULT, 
-                    '${vacation.destination}', 
-                    '${vacation.description}',
-                    '${vacation.imageName}', 
-                    '${vacation.startDate}', 
-                    '${vacation.endDate}',
-                    '${vacation.price}')`;
-    const result: OkPacket = await dal.execute(sql);
+    const sql = "INSERT INTO vacations VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)";
+    const result: OkPacket = await dal.execute(sql, [vacation.destination, vacation.description, vacation.imageName, vacation.startDate, vacation.endDate, vacation.price]);
     vacation.vacationId = result.insertId;
     return vacation;
 }
@@ -78,15 +64,8 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
         await vacation.image.mv(config.imagesFolderPath + vacation.imageName); // move image to images folder
         delete vacation.image; // delete image before saving
     }
-    const sql = `UPDATE vacations SET
-                    destination = '${vacation.destination}',
-                    description = '${vacation.description}',
-                    imageName = '${vacation.imageName}',
-                    startDate = '${vacation.startDate}',
-                    endDate = '${vacation.endDate}',
-                    price = '${vacation.price}'
-                    WHERE vacations.vacationId = ${vacation.vacationId}`;
-    const result: OkPacket = await dal.execute(sql);
+    const sql = "UPDATE vacations SET destination = ?, description = ?, imageName = ?, startDate = ?, endDate = ?, price = ? WHERE vacations.vacationId = ?";
+    const result: OkPacket = await dal.execute(sql, [vacation.destination, vacation.description, vacation.imageName, vacation.startDate, vacation.endDate, vacation.price, vacation.vacationId]);
     if (result.affectedRows === 0)
         throw new IdNotFoundError(vacation.vacationId);
     return vacation;
@@ -95,18 +74,15 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
 // Delete a vacation
 async function deleteVacation(vacationId: number): Promise<void> {
     // Find image name of the desired vacation in the DB
-    const findImageName = `SELECT imageName FROM vacations
-                            WHERE vacationId = ${vacationId}`;
-    const imageNameResult = await dal.execute(findImageName);
+    const findImageName = "SELECT imageName FROM vacations WHERE vacationId = ?";
+    const imageNameResult = await dal.execute(findImageName, [vacationId]);
     // extract the image name from the result
     const imageNameToDelete = imageNameResult[0].imageName;
     // delete image from HD
     await safeDelete(config.imagesFolderPath + imageNameToDelete); // Delete the previous image
     // delete vacation from DB
-    const sql = `DELETE
-                      FROM vacations
-                      WHERE vacationId = ${vacationId}`;
-    const result: OkPacket = await dal.execute(sql);
+    const sql = "DELETE FROM vacations WHERE vacationId = ?";
+    const result: OkPacket = await dal.execute(sql, [vacationId]);
     if (result.affectedRows === 0) throw new IdNotFoundError(vacationId);
 }
 

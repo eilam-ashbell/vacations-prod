@@ -1,10 +1,13 @@
 class Config {
     public port = 3001;
-    public mysqlHost = "localhost";
-    public mysqlUser = "root";
-    public mysqlPassword = "";
-    public mysqlDatabase = "vacations";
-    public imagesFolderPath = "./src/1-assets/images/"
+    public mysql = {
+        mysqlHost: "localhost",
+        mysqlUser: "root",
+        mysqlPassword: "",
+        mysqlDatabase: "vacations",
+    };
+    public imagesFolderPath = "./src/1-assets/images/";
+    public devMode = true;
 }
 
 const config = new Config();

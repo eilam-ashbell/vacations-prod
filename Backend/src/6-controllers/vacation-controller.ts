@@ -21,13 +21,13 @@ router.get(
 
 // GET all vacation for a specific user with followers data
 router.get(
-    "/api/vacations/:userId",
+    "/api/vacations/:useruuid",
     verifyLoggedIn,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
-            const userId = +request.params.userId;
+            const userUuid = request.params.useruuid;
             const vacations = await vacationLogic.getAllVacationsForUser(
-                userId
+                userUuid
             );
             response.json(vacations);
         } catch (err: any) {
