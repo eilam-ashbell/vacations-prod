@@ -1,0 +1,67 @@
+.FollowBtn {
+    position: absolute;
+    top: 0px;
+    left: -24px;
+    /* transform: translate(-50%, -50%); */
+    transform: scale(0.5);
+
+}
+.FollowBtn .content {
+    padding: 13px 16px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    border: 2px solid #eae2e1;
+    border-radius: 56px;
+    background-color: white;
+    cursor: pointer;
+    width: 105%;
+}
+
+.FollowBtn .content.heart-active {
+    border-color: hwb(350 73% 4%);
+    background: hwb(349 82% 2%);
+}
+.FollowBtn .heart {
+    position: absolute;
+    background-position: left;
+    background-size: 2900%;
+    height: 90px;
+    width: 90px;
+    top: -14px;
+    left: -5px;
+    /* transform: translate(-50%, -50%); */
+}
+.FollowBtn .text {
+    font-size: 21px;
+    margin-left: 48px;
+    color: grey;
+    /* font-family: "Montserrat", sans-serif; */
+}
+.FollowBtn .numb {
+    /* content: "12"; */
+    font-size: 21px;
+    /* margin-left: 7px; */
+    font-weight: 600;
+    color: #9c9496;
+    /* font-family: sans-serif; */
+}
+.FollowBtn .numb.heart-active {
+    /* content: "13"; */
+    color: #000;
+}
+.FollowBtn .text.heart-active {
+    color: #000;
+}
+.FollowBtn .heart.heart-active {
+    animation: animate 0.8s steps(28) 1;
+    background-position: right;
+}
+@keyframes animate {
+    0% {
+        background-position: left;
+    }
+    100% {
+        background-position: right;
+    }
+}

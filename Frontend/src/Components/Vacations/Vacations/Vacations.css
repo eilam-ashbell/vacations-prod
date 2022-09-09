@@ -1,0 +1,14 @@
+.Vacations .vacations-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 16px;
+    row-gap: 16px;
+    justify-content: center;
+}
+
+.Vacations .pagination-wrapper {
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}

@@ -8,23 +8,25 @@ import expressFileUpload from "express-fileupload";
 import authController from "./6-controllers/auth-controller";
 import sanitize from "./3-middleware/sanitize"
 import expressRateLimit from "express-rate-limit"
-
+import path from "path";
 
 // Create server object
 const server = express();
 
-// Securing DoS attacks
-server.use("/api/", expressRateLimit({
-    windowMs: 100, // Window time
-    max: 1, // Max request per window time
-    message: "Too many requests" // Message to alert when detecting more then max requests over window time
-}))
+// // Securing DoS attacks
+// server.use("/api/", expressRateLimit({
+//     windowMs: 100, // Window time
+//     max: 1, // Max request per window time
+//     message: "Too many requests" // Message to alert when detecting more then max requests over window time
+// }))
 
 // Allow cors
 server.use(cors());
 
 // Read the body json object
 server.use(express.json());
+
+server.use('/static',express.static('src/1-assets'))
 
 // Sanitize tags from requests
 server.use(sanitize)

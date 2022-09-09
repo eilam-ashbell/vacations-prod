@@ -1,5 +1,10 @@
 class Config {
-    public serverUrl = "http://localhost:3001/api/_____/";
+    public serverUrl = "http://localhost:3001/";
+    public serverStaticsImages = this.serverUrl + "static/images/"
+    public serverStaticsIcons = this.serverUrl + "static/icons/"
+    public routes = {
+        getAllVacations: this.serverUrl + "api/vacations/"
+    }
 }
 
 const config = new Config();

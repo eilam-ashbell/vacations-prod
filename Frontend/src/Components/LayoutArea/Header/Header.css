@@ -1,3 +1,23 @@
 .Header {
-	
+    display: flex;
+    flex-direction: row;
+    padding: 8px 24px;
+    align-items: center;
+    column-gap: 16px;
+    background-color: rgb(230, 230, 230);
+
+}
+.Header .user-data {
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 8px;
+    margin-left: auto;
+}
+
+.Header .login-out-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 8px;
 }
