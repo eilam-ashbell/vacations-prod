@@ -1,6 +1,9 @@
 import "./Header.css";
 import Avatar from '@mui/material/Avatar';
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import UserModel from "../../../Models/userModel";
+import { authStore } from "../../../Redux/AuthState";
 
 function stringToColor(string: string) {
     let hash = 0;
@@ -31,35 +34,57 @@ function stringAvatar(name: string) {
     };
 }
 
-interface HeaderProps {
-    fullName: string;
-}
+// interface HeaderProps {
+//     fullName: string;
+// }
 
-function Header(props: HeaderProps): JSX.Element {
+function Header(): JSX.Element {
 
+    const [user, setUser] = useState<UserModel>();
     const navigate = useNavigate()
+
+    useEffect(() => {
+
+        setUser(authStore.getState().user)
+
+        const unsubscribe = authStore.subscribe(() => {
+            setUser(authStore.getState().user)
+        })
+
+        return () => unsubscribe()
+        
+    }, [])
 
     return (
         <div className="Header">
             <h3>My Vacations</h3>
+
             <div className="user-data">
-                <Avatar  {...stringAvatar(props.fullName)} />
-                <span>{props.fullName}</span>
-            </div>
-            <div className="login-out-wrapper">
-                <>
-                    <button
-                        className="login-btn"
-                        onClick={() => navigate("/login")}>
-                        Login
-                    </button>
-                    <button
-                        className="register-btn"
-                        onClick={() => navigate("/register")}>
-                        register
-                    </button>
-                </>
-                <button className="sign-out-btn">Sign Out</button>
+                {
+                    !user &&
+                    <>
+                        <div className="login-out-wrapper">
+                            <button
+                                className="login-btn"
+                                onClick={() => navigate("/login")}>
+                                Login
+                            </button>
+                            <button
+                                className="register-btn"
+                                onClick={() => navigate("/register")}>
+                                Register
+                            </button>
+                        </div>
+                    </>
+                }
+                {
+                    user &&
+                    <>
+                        <Avatar  {...stringAvatar(user.firstName + " " + user.lastName)} />
+                        <span>{user.firstName + " " + user.lastName}</span>
+                        <button className="sign-out-btn" onClick={() => navigate("/logout")}>Logout</button>
+                    </>
+                }
             </div>
         </div>
     );

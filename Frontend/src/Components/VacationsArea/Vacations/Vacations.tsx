@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import VacationModel from "../../../Models/vacationModel";
-import { vacationsStore } from "../../../Redux/VacationsState";
 import vacationsService from "../../../Services/VacationsService";
 import VacationCard from "../VacationCard/VacationCard";
-import VacationsPagination from "../VacationsPagination/VacationsPagination";
 import "./Vacations.css";
 import Pagination from '@mui/material/Pagination';
+import VacationForUserModel from "../../../Models/vacationForUserModel";
 
 
 function Vacations(): JSX.Element {
 
     const pageSize = 5
-    const [vacations, setVacations] = useState<VacationModel[]>([])
-    const [vacationsToDisplay, setVacationsToDisplay] = useState<VacationModel[]>([])
+    const [vacations, setVacations] = useState<VacationForUserModel[]>([])
+    const [vacationsToDisplay, setVacationsToDisplay] = useState<VacationForUserModel[]>([])
     const [pagination, setPagination] = useState({
         count: 0,
         from: 0,
@@ -24,9 +22,10 @@ function Vacations(): JSX.Element {
         vacationsService.getAllVacations("1a79f497-94ac-4077-a0c9-20a89ba5410c").then(result => {
             setVacations(result)
         })
+        
     }, [])
 
-    useEffect(() => {
+    useEffect(() => { 
         const vacationsLength = vacations.length
         const vacationsOnPage = vacations.slice(pagination.from, pagination.to)
         setPagination({ ...pagination, count: vacationsLength })
@@ -44,7 +43,7 @@ function Vacations(): JSX.Element {
             <div className="vacations-wrapper">
             { 
             vacationsToDisplay.map( v => 
-                <VacationCard />
+                <VacationCard key={v.vacationId} vacationData={v}/>
             )
             }
 

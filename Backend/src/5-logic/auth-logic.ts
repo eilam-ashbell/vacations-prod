@@ -14,6 +14,9 @@ async function register(user: UserModel): Promise<string> {
     // Assign UUID to user
     user.userUuid = uuid();
 
+    // Assign roleId to user
+    user.roleId = 2;
+
     // Validate user data
     const error = user.validate();
     if (error) throw new ValidationError(error);
@@ -28,6 +31,7 @@ async function register(user: UserModel): Promise<string> {
 
     // Delete user's password from user object
     delete user.password;
+    delete user.userId;
 
     // Generate new token fo the user
     const token = auth.generateNewToken(user);
@@ -62,6 +66,7 @@ async function login(credentials: CredentialModel): Promise<string> {
 
     // Delete password from user object
     delete user.password;
+    delete user.userId;
 
     // Generate new token
     const token = auth.generateNewToken(user);

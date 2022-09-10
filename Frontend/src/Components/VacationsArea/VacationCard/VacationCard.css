@@ -1,12 +1,13 @@
 .VacationCard {
-	width: 100%;
+    width: 100%;
     max-width: 320px;
-    height: 400px;
+    /* height: 450px; */
     border: 1px solid white;
     border-radius: 6px;
     background-color: white;
     overflow: hidden;
     position: relative;
+    padding-bottom: 16px;
 }
 .VacationCard .bg-image {
     display: flex;
@@ -23,7 +24,7 @@
     font-weight: 300;
 }
 .VacationCard .card-body {
-    margin: 24px 24px; 
+    margin: 24px 24px;
 }
 
 .VacationCard .vacation-dates {
@@ -49,6 +50,13 @@
     margin-top: 16px;
     padding: 0px 4px;
     text-align: justify;
-    text-justify:auto;
-
+    text-justify: auto;
+}
+.VacationCard p {
+    text-overflow:ellipsis;
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    white-space: normal;
 }

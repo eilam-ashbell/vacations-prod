@@ -1,9 +1,9 @@
 import { createStore } from "redux";
-import VacationModel from "../Models/vacationModel";
+import VacationForUserModel from "../Models/vacationForUserModel";
 
 // 1. State - This is the data:
 export class VacationsState {
-    public vacations: VacationModel[] = []; // Our global data.
+    public vacations: VacationForUserModel[] = []; // Our global data.
 }
 
 // 2. Action Type - List of actions we can do on the above state

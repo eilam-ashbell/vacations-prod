@@ -10,6 +10,7 @@ import VacationModel from "../4-models/vacation-model";
 import { v4 as uuid } from "uuid";
 import safeDelete from "../2-utils/safe-delete";
 import config from "../2-utils/config";
+import FollowerModel from "../4-models/follower-model";
 
 // GET all vacations data
 async function getAllVacations(): Promise<VacationModel[]> {
@@ -106,19 +107,20 @@ async function deleteVacation(vacationId: number): Promise<void> {
     if (result.affectedRows === 0) throw new IdNotFoundError(vacationId);
 }
 
-// Assign un-follow for a vacation
+// Assign follow for a vacation
 async function followVacation(
     vacationId: number,
     userUuid: string
-): Promise<void> {
+): Promise<FollowerModel> {
     const sql =
         "INSERT INTO followers VALUES ((SELECT userId FROM users WHERE userUuid = ?), ? )";
-    const follower = await dal.execute(sql, [
+    await dal.execute(sql, [
         userUuid,
         vacationId,
         userUuid,
         vacationId,
     ]);
+    const follower = new FollowerModel({"userUuid": userUuid, "vacationId": vacationId});
     return follower;
 }
 
