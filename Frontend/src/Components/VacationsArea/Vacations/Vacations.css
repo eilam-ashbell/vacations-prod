@@ -1,10 +1,15 @@
+.Vacations .vacations-align {
+    display: flex;
+    width: 100%;
+    margin: auto;
+}
 .Vacations .vacations-wrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     column-gap: 16px;
     row-gap: 16px;
-    justify-content: center;
+    /* justify-content: center; */
 }
 
 .Vacations .pagination-wrapper {

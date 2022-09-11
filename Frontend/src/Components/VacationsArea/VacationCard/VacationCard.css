@@ -1,6 +1,7 @@
 .VacationCard {
-    width: 100%;
-    max-width: 320px;
+    width: 30%;
+    /* max-width: 30%; */
+    min-width: 320px;
     /* height: 450px; */
     border: 1px solid white;
     border-radius: 6px;
@@ -8,6 +9,7 @@
     overflow: hidden;
     position: relative;
     padding-bottom: 16px;
+    flex-grow: 1;
 }
 .VacationCard .bg-image {
     display: flex;
@@ -23,6 +25,19 @@
     color: hwb(0 100% 0%);
     font-weight: 300;
 }
+
+.VacationCard .bg-image > .functionality-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.VacationCard .admin-wrapper {
+    display: flex;
+    position: absolute;
+    right: 16px;
+    column-gap: 8px;
+}
+
 .VacationCard .card-body {
     margin: 24px 24px;
 }

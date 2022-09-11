@@ -8,11 +8,13 @@ import jwtDecode from "jwt-decode";
 import { authStore } from "../../../Redux/AuthState";
 import UserModel from "../../../Models/userModel";
 import { vacationsStore } from "../../../Redux/VacationsState";
+import { useBadge } from "@mui/base";
+import config from "../../../Utils/Config";
 
 
 function Vacations(): JSX.Element {
 
-    const pageSize = 5
+    const pageSize = config.numOfVacationsOnPage
     const [vacations, setVacations] = useState<VacationForUserModel[]>([])
     const [vacationsToDisplay, setVacationsToDisplay] = useState<VacationForUserModel[]>([])
     const [pagination, setPagination] = useState({
@@ -21,28 +23,48 @@ function Vacations(): JSX.Element {
         to: pageSize
     })
 
-
+    // Get all vacation for specific user on load
     useEffect(() => {
+        // Extract user object from token
         const container: { user: UserModel } = jwtDecode(authStore.getState().token)
         const user = container.user
+        // Get vacation for this user
         vacationsService.getAllVacations(user.userUuid).then(result => {
+            // Set results in local state
             setVacations(result)
         })
-
-        // const unsubscribe = vacationsStore.subscribe(() => {
-        //     setVacations(vacationsStore.getState().vacations)            
-        // })
-
-
     }, [])
 
     useEffect(() => {
+
+        // Define how many vacations there are in the state
         const vacationsLength = vacations.length
+
+        // Define which vacation to display
         const vacationsOnPage = vacations.slice(pagination.from, pagination.to)
+
+        // Set vacation count in state
         setPagination({ ...pagination, count: vacationsLength })
+
+        // Set relevant vacation to display
         setVacationsToDisplay(vacationsOnPage)
+
+        // If vacation store changed > repeat functionality
+        const unsubscribe = vacationsStore.subscribe(() => {
+            setVacations(vacationsStore.getState().vacations)
+            const vacationsLength = vacations.length
+            const vacationsOnPage = vacations.slice(pagination.from, pagination.to)
+            setPagination({ ...pagination, count: vacationsLength })
+            setVacationsToDisplay(vacationsOnPage)
+        })
+
+        // Unsubscribe from vacation store
+        return () => unsubscribe()
+
+        // Repeat functionality each time local states are change
     }, [vacations, pagination.from, pagination.to])
 
+    // Handle page change on pagination
     function handlePageChange(event: React.ChangeEvent<unknown>, page: number): void {
         const from = (page - 1) * pageSize;
         const to = (page - 1) * pageSize + pageSize;
@@ -51,13 +73,14 @@ function Vacations(): JSX.Element {
 
     return (
         <div className="Vacations">
-            <div className="vacations-wrapper">
-                {
-                    vacationsToDisplay.map(v =>
-                        <VacationCard key={v.vacationId} vacationData={v} />
-                    )
-                }
-
+            <div className="vacations-align">
+                <div className="vacations-wrapper">
+                    {
+                        vacationsToDisplay.map(v =>
+                            <VacationCard key={v.vacationId} vacationData={v} />
+                        )
+                    }
+                </div>
             </div>
             <div className="pagination-wrapper">
                 <Pagination
