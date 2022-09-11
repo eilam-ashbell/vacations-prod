@@ -39,13 +39,13 @@ export function authReducer(
             const container: { user: UserModel } = jwtDecode(newState.token);
             newState.user = container.user;
             localStorage.setItem("token", newState.token);
-            localStorage.setItem("user", JSON.stringify(newState.user))
+            // localStorage.setItem("user", JSON.stringify(newState.user))
             break;
         case AuthActionType.Logout: // payload is
             newState.token = null;
             newState.user = null;
             localStorage.removeItem("token");
-            localStorage.removeItem("user");
+            // localStorage.removeItem("user");
             break;
     }
 

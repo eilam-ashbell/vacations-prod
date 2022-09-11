@@ -1,44 +1,62 @@
+import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
+import UserModel from "../../../Models/userModel";
+import VacationForUserModel from "../../../Models/vacationForUserModel";
+import { authStore } from "../../../Redux/AuthState";
+import { vacationsStore } from "../../../Redux/VacationsState";
+import vacationsService from "../../../Services/VacationsService";
 import config from "../../../Utils/Config";
 import "./FollowBtn.css";
 
 
 interface FollowBtnProps {
-    numberOfFollowers: number;
-    isFollow: number;
+    vacation: VacationForUserModel;
 }
 
 function FollowBtn(props: FollowBtnProps): JSX.Element {
 
     const [isFollow, setIsFollow] = useState<number>(0)
     const [followersCount, setFollowersCount] = useState<number>(0)
+    const [vacation, setVacation] = useState<VacationForUserModel>(null)
+    const [user, setUser] = useState<UserModel>(null)
 
     useEffect(() => {
-        setIsFollow(props.isFollow)
-        setFollowersCount(props.numberOfFollowers)
+        setVacation(props.vacation)
+        setFollowersCount(props.vacation.followersCount)
+        setIsFollow(props.vacation.isFollowing)
+        const container: { user: UserModel } = jwtDecode(authStore.getState().token);
+        const user = container.user;
+        setUser(user)
     }, [])
 
     function handleFollow() {
-        if (isFollow === 0) {
+        if (vacation.isFollowing === 0) {
             setIsFollow(1)
             setFollowersCount(followersCount + 1)
+            vacationsService.addFollower(user.userUuid, vacation)
         } else {
             setIsFollow(0)
             setFollowersCount(followersCount - 1)
+            vacationsService.removeFollower(user.userUuid, vacation)
         }
     }
 
     return (
         <div className="FollowBtn" onClick={handleFollow}>
-            <div className={isFollow === 0 ? "content" : "content heart-active"}>
-                <span className={isFollow === 0 ? "text" : "text heart-active"}>Like</span>
-                <span className={isFollow === 0 ? "numb" : "numb heart-active"}>
-                    {followersCount}
-                </span>
-                <span className={isFollow === 0 ? "heart" : "heart heart-active"}
-                    style={{ backgroundImage: `url(${config.serverStaticsIcons}img.png)` }}
-                ></span>
-            </div>
+            {
+                vacation &&
+                <>
+                    <div className={isFollow === 0 ? "content" : "content heart-active"}>
+                        <span className={isFollow === 0 ? "text" : "text heart-active"}>Like</span>
+                        <span className={isFollow === 0 ? "numb" : "numb heart-active"}>
+                            {followersCount}
+                        </span>
+                        <span className={isFollow === 0 ? "heart" : "heart heart-active"}
+                            style={{ backgroundImage: `url(${config.serverStaticsIcons}img.png)` }}
+                        ></span>
+                    </div>
+                </>
+            }
         </div>
     );
 }

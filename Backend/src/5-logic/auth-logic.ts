@@ -43,7 +43,6 @@ async function login(credentials: CredentialModel): Promise<string> {
 
     // Hash user password
     credentials.password = hash(credentials.password);
-    console.log(credentials);
     
     // Validate user data
     const error = credentials.validate();
@@ -56,7 +55,6 @@ async function login(credentials: CredentialModel): Promise<string> {
         credentials.username,
         credentials.password,
     ]);
-    console.log(users);
     
     if (users.length === 0)
         throw new UnauthorizedError("Incorrect username or password");

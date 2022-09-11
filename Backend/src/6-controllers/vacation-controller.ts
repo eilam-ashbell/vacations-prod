@@ -26,7 +26,7 @@ router.get(
     // verifyLoggedIn,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
-            const userUuid: string = request.params.userUuid;
+            const userUuid: string = request.params.userUuid;            
             const vacations = await vacationLogic.getAllVacationsForUser(
                 userUuid
             );

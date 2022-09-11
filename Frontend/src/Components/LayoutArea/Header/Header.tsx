@@ -34,10 +34,6 @@ function stringAvatar(name: string) {
     };
 }
 
-// interface HeaderProps {
-//     fullName: string;
-// }
-
 function Header(): JSX.Element {
 
     const [user, setUser] = useState<UserModel>();

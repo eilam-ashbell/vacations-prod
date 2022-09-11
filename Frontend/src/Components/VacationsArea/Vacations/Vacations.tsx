@@ -4,6 +4,10 @@ import VacationCard from "../VacationCard/VacationCard";
 import "./Vacations.css";
 import Pagination from '@mui/material/Pagination';
 import VacationForUserModel from "../../../Models/vacationForUserModel";
+import jwtDecode from "jwt-decode";
+import { authStore } from "../../../Redux/AuthState";
+import UserModel from "../../../Models/userModel";
+import { vacationsStore } from "../../../Redux/VacationsState";
 
 
 function Vacations(): JSX.Element {
@@ -19,13 +23,20 @@ function Vacations(): JSX.Element {
 
 
     useEffect(() => {
-        vacationsService.getAllVacations("1a79f497-94ac-4077-a0c9-20a89ba5410c").then(result => {
+        const container: { user: UserModel } = jwtDecode(authStore.getState().token)
+        const user = container.user
+        vacationsService.getAllVacations(user.userUuid).then(result => {
             setVacations(result)
         })
-        
+
+        // const unsubscribe = vacationsStore.subscribe(() => {
+        //     setVacations(vacationsStore.getState().vacations)            
+        // })
+
+
     }, [])
 
-    useEffect(() => { 
+    useEffect(() => {
         const vacationsLength = vacations.length
         const vacationsOnPage = vacations.slice(pagination.from, pagination.to)
         setPagination({ ...pagination, count: vacationsLength })
@@ -41,18 +52,18 @@ function Vacations(): JSX.Element {
     return (
         <div className="Vacations">
             <div className="vacations-wrapper">
-            { 
-            vacationsToDisplay.map( v => 
-                <VacationCard key={v.vacationId} vacationData={v}/>
-            )
-            }
+                {
+                    vacationsToDisplay.map(v =>
+                        <VacationCard key={v.vacationId} vacationData={v} />
+                    )
+                }
 
             </div>
             <div className="pagination-wrapper">
-            <Pagination
-                count={Math.ceil(vacations.length / pageSize)}
-                onChange={handlePageChange}
-            />
+                <Pagination
+                    count={Math.ceil(vacations.length / pageSize)}
+                    onChange={handlePageChange}
+                />
             </div>
         </div>
     );

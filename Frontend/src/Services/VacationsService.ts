@@ -29,19 +29,48 @@ class VacationService {
 
     public async addFollower(
         userUuid: string,
-        vacationId: number
+        vacation: VacationForUserModel
     ): Promise<FollowerModel> {
         const follower = new FollowerModel({
             userUuid: userUuid,
-            vacationId: vacationId,
+            vacationId: vacation.vacationId,
         });
         const response = await axios.post<FollowerModel>(
             config.routes.addFollower,
             follower
         );
         const addedFollower = response.data;
-        console.log(addedFollower);
+        vacation.followersCount++
+        vacation.isFollowing = 1
+        const action: VacationsAction = {
+            type: VacationsActionType.UpdateVacation,
+            payload: vacation,
+        };
+        vacationsStore.dispatch(action);
         return addedFollower;
+    }
+
+    public async removeFollower(
+        userUuid: string,
+        vacation: VacationForUserModel
+    ): Promise<void> {
+        const follower = new FollowerModel({
+            userUuid: userUuid,
+            vacationId: vacation.vacationId,
+        });        
+        await axios.delete<void>(
+            config.routes.removeFollower,
+            {data: follower}
+        );
+        // const removedFollower = response.data;
+        vacation.followersCount--
+        vacation.isFollowing = 0
+        const action: VacationsAction = {
+            type: VacationsActionType.UpdateVacation,
+            payload: vacation,
+        };
+        vacationsStore.dispatch(action);
+        // return removedFollower;
     }
 }
 

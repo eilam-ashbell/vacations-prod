@@ -27,7 +27,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
             className="bg-image"
             style={bgImageStyle} 
             >
-                <FollowBtn numberOfFollowers={props.vacationData.followersCount} isFollow={props.vacationData.isFollowing}/>
+                <FollowBtn vacation={props.vacationData}/>
                 <h3>{props.vacationData.destination}</h3>
             </div>
             <div className="card-body">
