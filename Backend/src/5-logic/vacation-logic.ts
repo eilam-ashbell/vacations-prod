@@ -34,6 +34,13 @@ async function getAllVacationsForUser(
     return vacations;
 }
 
+// GET a vacation data
+async function getVacation(vacationId: number): Promise<VacationModel> {
+    const sql = "SELECT * FROM vacations WHERE vacationId = ?";
+    const vacation = await dal.execute(sql, [vacationId]);
+    return vacation;
+}
+
 // Add a vacation
 async function addVacation(vacation: VacationModel): Promise<VacationModel> {
     // Validate vacation data
@@ -71,7 +78,7 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     if (error) throw new ValidationError(error);
 
     // Handle image
-    if (vacation.image) {
+    if (vacation.image) {       
         await safeDelete(config.imagesFolderPath + vacation.imageName); // Delete the previous image
         const extension = vacation.image.name.substring(
             vacation.image.name.lastIndexOf(".")
@@ -152,6 +159,7 @@ async function getVacationsDataToReport(): Promise<VacationFollowersModel[]> {
 export default {
     getAllVacations,
     getAllVacationsForUser,
+    getVacation,
     addVacation,
     updateVacation,
     deleteVacation,

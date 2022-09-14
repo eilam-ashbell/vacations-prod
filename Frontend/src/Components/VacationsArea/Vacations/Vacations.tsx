@@ -5,15 +5,17 @@ import "./Vacations.css";
 import Pagination from '@mui/material/Pagination';
 import VacationForUserModel from "../../../Models/vacationForUserModel";
 import jwtDecode from "jwt-decode";
-import { authStore } from "../../../Redux/AuthState";
+import { AuthAction, AuthActionType, authStore } from "../../../Redux/AuthState";
 import UserModel from "../../../Models/userModel";
 import { vacationsStore } from "../../../Redux/VacationsState";
 import { useBadge } from "@mui/base";
 import config from "../../../Utils/Config";
+import { useNavigate } from "react-router-dom";
 
 
 function Vacations(): JSX.Element {
 
+    const navigate = useNavigate()
     const pageSize = config.numOfVacationsOnPage
     const [vacations, setVacations] = useState<VacationForUserModel[]>([])
     const [vacationsToDisplay, setVacationsToDisplay] = useState<VacationForUserModel[]>([])
@@ -25,13 +27,21 @@ function Vacations(): JSX.Element {
 
     // Get all vacation for specific user on load
     useEffect(() => {
+        if (!authStore.getState().token) navigate("/login")
         // Extract user object from token
         const container: { user: UserModel } = jwtDecode(authStore.getState().token)
         const user = container.user
         // Get vacation for this user
+
         vacationsService.getAllVacations(user.userUuid).then(result => {
             // Set results in local state
             setVacations(result)
+        }).catch( err => {
+            const action: AuthAction = {
+                type: AuthActionType.Logout
+            }
+            authStore.dispatch(action)
+            navigate("/login")
         })
     }, [])
 

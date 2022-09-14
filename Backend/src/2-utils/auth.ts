@@ -51,12 +51,12 @@ function getUserRoleIdFromToken(authHeader: string): number {
 
     // extract token
     const token = authHeader.substring(7);
-
+    
     // get user container from token
     const container = jwt.decode(token) as {user: UserModel};
-
+    
     // get user data from container
-    const user = container.user[0];
+    const user = container.user;
     
     // get roleId of user
     const role = user.roleId;

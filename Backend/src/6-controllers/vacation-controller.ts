@@ -23,7 +23,7 @@ const router = express.Router();
 // GET all vacation for a specific user with followers data
 router.get(
     "/api/vacations/:userUuid",
-    // verifyLoggedIn,
+    verifyLoggedIn,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             const userUuid: string = request.params.userUuid;            
@@ -37,10 +37,25 @@ router.get(
     }
 );
 
+// GET a vacation
+router.get(
+    "/api/vacations/:vacationId",
+    verifyAdmin,
+    async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const vacationId = +request.params.vacationId;
+            const vacation = await vacationLogic.getVacation(vacationId)
+            response.json(vacation);
+        } catch (err: any) {
+            next(err);
+        }
+    }
+);
+
 // Add a vacation
 router.post(
     "/api/vacations",
-    // verifyAdmin,
+    verifyAdmin,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             // get image file from the front
@@ -58,14 +73,14 @@ router.post(
 // Update a vacation
 router.put(
     "/api/vacations/:vacationId",
-    // verifyAdmin,
+    verifyAdmin,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             // get image file from the front
             request.body.image = request.files?.image;
             // assign vacation ID from URL params to vacation object
             request.body.vacationId = +request.params.vacationId;
-            const vacation = new VacationModel(request.body);
+            const vacation = new VacationModel(request.body);            
             const updatedVacation = await vacationLogic.updateVacation(
                 vacation
             );
@@ -79,7 +94,7 @@ router.put(
 // Delete a vacation
 router.delete(
     "/api/vacations/:vacationId",
-    // verifyAdmin,
+    verifyAdmin,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             const vacationId = +request.params.vacationId;
@@ -94,7 +109,7 @@ router.delete(
 // Assign follow for a vacation
 router.post(
     "/api/followers",
-    // verifyLoggedIn,
+    verifyLoggedIn,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             const vacationId = request.body?.vacationId;
@@ -113,7 +128,7 @@ router.post(
 // Assign un-follow for a vacation
 router.delete(
     "/api/followers",
-    // verifyLoggedIn,
+    verifyLoggedIn,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             const vacationId = request.body?.vacationId;
@@ -129,7 +144,7 @@ router.delete(
 // GET vacations data for report
 router.get(
     "/api/vacations/report",
-    // verifyAdmin,
+    verifyAdmin,
     async (request: Request, response: Response, next: NextFunction) => {
         try {
             const vacationsData =

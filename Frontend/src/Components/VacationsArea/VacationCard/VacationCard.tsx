@@ -9,6 +9,8 @@ import { Button } from "@mui/material";
 import { color } from "@mui/system";
 import { VacationsAction, VacationsActionType, vacationsStore } from "../../../Redux/VacationsState";
 import { authStore } from "../../../Redux/AuthState";
+import vacationsService from "../../../Services/VacationsService";
+import { useNavigate } from "react-router-dom";
 
 interface VacationCardProps {
     vacationData: VacationForUserModel;
@@ -21,7 +23,8 @@ function formatDate(date: string): string {
 }
 
 function VacationCard(props: VacationCardProps): JSX.Element {
-
+    
+    const navigate = useNavigate()
     const bgImageStyle = {
         backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0)60%), url(${config.serverStaticsImages + props.vacationData.imageName})`
     }
@@ -47,14 +50,6 @@ function VacationCard(props: VacationCardProps): JSX.Element {
         transform: "translateY(-1px)"
     }
 
-    function handleDelete() {
-        const action: VacationsAction = {
-            type: VacationsActionType.DeleteVacation,
-            payload: props.vacationData.vacationId
-        }
-        vacationsStore.dispatch(action)
-    }
-
     return (
         <div className="VacationCard">
             <div
@@ -70,7 +65,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                             size="small"
                             startIcon={<DeleteIcon sx={adminBtnIconsStyle} />}
                             sx={adminBtnStyle}
-                            onClick={handleDelete}>
+                            onClick={() => {vacationsService.deleteVacation(props.vacationData.vacationId)}}>
                             Delete
                         </Button>
                         <Button
@@ -78,7 +73,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                             size="small"
                             startIcon={<EditIcon fontSize="small" sx={adminBtnIconsStyle} />}
                             sx={adminBtnStyle}
-                        // onClick={}
+                        onClick={() => navigate('/edit/' + props.vacationData.vacationId)}
                         >
                             Edit
                         </Button>
@@ -90,9 +85,11 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                 <span className="vacation-dates"><span className="from-date">{formatDate(props.vacationData.startDate)}</span>
                     <KeyboardArrowRightIcon />
                     <span className="till-date">{formatDate(props.vacationData.endDate)}</span></span>
-                <hr></hr>
+                <hr/>
                 <p className="vacation-description">{props.vacationData.description}
                 </p>
+                <hr/>
+                <h4>Start at: $ {props.vacationData.price}</h4>
             </div>
         </div>
     );

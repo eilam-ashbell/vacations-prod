@@ -37,7 +37,7 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
             break;
 
         case VacationsActionType.UpdateVacation: // Here payload must be the product to update
-            const indexToUpdate = newState.vacations.findIndex(v => v.vacationId === action.payload.id); // -1 if not exist
+            const indexToUpdate = newState.vacations.findIndex(v => v.vacationId === action.payload.vacationId); // -1 if not exist
             if (indexToUpdate >= 0) {
                 newState.vacations[indexToUpdate] = action.payload; // Update
             }

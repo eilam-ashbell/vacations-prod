@@ -2,7 +2,7 @@ class VacationModel {
     public vacationId: number;
     public destination: string;
     public description: string;
-    public image: FormData;
+    public image: FileList;
     public imageName: string;
     public startDate: string;
     public endDate: string;

@@ -51,7 +51,7 @@
 }
 
 .VacationCard .vacation-dates > span {
-    border: 1px solid hwb(0 100% 8%);
+    /* border: 1px solid hwb(0 100% 8%); */
     padding: 2px 6px;
     border-radius: 6px;
 }

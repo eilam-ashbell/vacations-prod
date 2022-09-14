@@ -1,0 +1,21 @@
+.AddVacation form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    margin: auto;
+    width: min-content;
+    padding: 32px 24px;
+    background-color: rgb(230, 230, 230);
+    border-radius: 8px;
+}
+
+.AddVacation .input-label-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+    align-items: flex-start;
+}
+
+form input {
+    width: 100%;
+}
