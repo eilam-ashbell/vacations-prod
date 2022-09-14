@@ -1,11 +1,16 @@
 .Header {
     display: flex;
     flex-direction: row;
-    padding: 8px 24px;
+    padding: 12px 40px;
     align-items: center;
     column-gap: 16px;
-    background-color: rgb(230, 230, 230);
+    background-color: var(--Prime-500);
+    color: white;
 
+}
+.Header h3 {
+    font-size: 24px;
+    font-weight: 100;
 }
 .Header .user-data {
 	display: flex;
@@ -20,4 +25,19 @@
     flex-direction: row;
     align-items: center;
     column-gap: 8px;
+}
+
+.Header .span-name {
+    text-transform: capitalize;
+    font-weight: 500;
+    margin-right: 24px;
+}
+
+.Header button {
+    background-color: rgba(0,0,0,0.15);
+    border: 0px solid transparent;
+    padding: 6px 16px;
+    border-radius: 4px;
+    color: white;
+    font-weight: 200;
 }

@@ -23,22 +23,22 @@ function formatDate(date: string): string {
 }
 
 function VacationCard(props: VacationCardProps): JSX.Element {
-    
+
     const navigate = useNavigate()
     const bgImageStyle = {
-        backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0)60%), url(${config.serverStaticsImages + props.vacationData.imageName})`
+        backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0)80%), url(${config.serverStaticsImages + props.vacationData.imageName})`
     }
 
     const adminBtnStyle = {
         backgroundColor: "white",
-        color: "#9c9496",
+        color: "var(--Neutral-700)",
         boxShadow: "none",
         fontSize: 12,
         textTransform: "capitalize",
         fontFamily: 'roboto',
         borderRadius: "100px",
         '&:hover': {
-            backgroundColor: '#9c9496',
+            backgroundColor: 'var(--Prime-700)',
             color: '#fff',
             borderColor: '#0062cc',
             boxShadow: 'none',
@@ -65,7 +65,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                             size="small"
                             startIcon={<DeleteIcon sx={adminBtnIconsStyle} />}
                             sx={adminBtnStyle}
-                            onClick={() => {vacationsService.deleteVacation(props.vacationData.vacationId)}}>
+                            onClick={() => { vacationsService.deleteVacation(props.vacationData.vacationId) }}>
                             Delete
                         </Button>
                         <Button
@@ -73,7 +73,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                             size="small"
                             startIcon={<EditIcon fontSize="small" sx={adminBtnIconsStyle} />}
                             sx={adminBtnStyle}
-                        onClick={() => navigate('/edit/' + props.vacationData.vacationId)}
+                            onClick={() => navigate('/edit/' + props.vacationData.vacationId)}
                         >
                             Edit
                         </Button>
@@ -82,14 +82,17 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                 <h3>{props.vacationData.destination}</h3>
             </div>
             <div className="card-body">
-                <span className="vacation-dates"><span className="from-date">{formatDate(props.vacationData.startDate)}</span>
+                <h4>Start at: ${props.vacationData.price}</h4>
+                <span className="vacation-dates">
+                    <span className="from-date">{formatDate(props.vacationData.startDate)}
+                    </span>
                     <KeyboardArrowRightIcon />
-                    <span className="till-date">{formatDate(props.vacationData.endDate)}</span></span>
-                <hr/>
+                    <span className="till-date">{formatDate(props.vacationData.endDate)}
+                    </span>
+                    </span>
+                <hr />
                 <p className="vacation-description">{props.vacationData.description}
                 </p>
-                <hr/>
-                <h4>Start at: $ {props.vacationData.price}</h4>
             </div>
         </div>
     );

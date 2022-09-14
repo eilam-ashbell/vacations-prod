@@ -1,8 +1,10 @@
 .VacationCard {
+    display: flex;
+    flex-direction: column;
     width: 30%;
     /* max-width: 30%; */
     min-width: 320px;
-    /* height: 450px; */
+    height: 450px;
     border: 1px solid white;
     border-radius: 6px;
     background-color: white;
@@ -21,9 +23,11 @@
     padding: 16px 24px;
 }
 .VacationCard .bg-image h3 {
+    font-size: 24px;
     margin-top: auto;
-    color: hwb(0 100% 0%);
-    font-weight: 300;
+    color: white;
+    font-weight: 400;
+    letter-spacing:2px;
 }
 
 .VacationCard .bg-image > .functionality-wrapper {
@@ -42,22 +46,29 @@
     margin: 24px 24px;
 }
 
-.VacationCard .vacation-dates {
+.VacationCard h4 {
+    font-size: 20px;
     font-weight: 100;
-    color: hwb(0 100% 32%);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    color: var(--Prime-500);
+    margin-bottom: 4px;
 }
 
-.VacationCard .vacation-dates > span {
-    /* border: 1px solid hwb(0 100% 8%); */
-    padding: 2px 6px;
-    border-radius: 6px;
+.VacationCard .vacation-dates {
+    font-size: 14px;
+    font-weight: 100;
+    color: var(--Neutral-700);
+    display: flex;
+    flex-direction: row;
+    column-gap: 6px;
+    align-items: center;
+    margin-bottom: 16px;
+
 }
 
 .VacationCard hr {
-    border: 0.5px solid hwb(0 100% 8%);
+    /* border: 0.5px solid hwb(0 100% 8%); */
+    border: 0.5px solid var(--Neutral-100);
+
     border-top: 0px;
 }
 

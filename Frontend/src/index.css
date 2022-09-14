@@ -77,9 +77,20 @@ select {
 html,
 body,
 #root {
+    --Neutral-50:hwb(240 96% 3%);
+    --Neutral-100:hwb(216 91% 10%);
+    --Neutral-200:hwb(216 91% 20%);
+    --Neutral-300:hwb(216 91% 30%);
+    --Neutral-400:hwb(216 91% 40%);
+    --Neutral-500:hwb(216 91% 50%);
+    --Neutral-600:hwb(216 91% 60%);
+    --Neutral-700:hwb(216 91% 70%);
+    --Success-100: #3DD4AF;
+    --Prime-500: #0294E8;
+    --Prime-700: #0475F1;
+    /*  */
     height: 100%;
-    background-color: rgb(240, 240, 240);
+    background-color: var(--Neutral-50);
     font-family: 'Roboto', sans-serif;
     font-weight: 200;
-
 }

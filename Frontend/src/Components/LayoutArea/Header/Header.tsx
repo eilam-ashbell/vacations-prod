@@ -48,12 +48,12 @@ function Header(): JSX.Element {
         })
 
         return () => unsubscribe()
-        
+
     }, [])
 
     return (
         <div className="Header">
-            <h3>My Vacations</h3>
+            <h3>Vacations.com</h3>
 
             <div className="user-data">
                 {
@@ -76,8 +76,9 @@ function Header(): JSX.Element {
                 {
                     user &&
                     <>
-                        <Avatar  {...stringAvatar(user.firstName + " " + user.lastName)} />
-                        <span>{user.firstName + " " + user.lastName}</span>
+                        {/* <Avatar  {...stringAvatar(user.firstName + " " + user.lastName)} /> */}
+                        <span>Hello</span>
+                        <span className="span-name">{user.firstName + " " + user.lastName}</span>
                         <button className="sign-out-btn" onClick={() => navigate("/logout")}>Logout</button>
                     </>
                 }
