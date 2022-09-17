@@ -14,7 +14,7 @@ class Config {
         addVacation: this.serverUrl + "api/vacation/",
         getReportData: this.serverUrl + "api/report",
     }
-    public numOfVacationsOnPage = 3
+    public numOfVacationsOnPage = 9
 }
 
 const config = new Config();

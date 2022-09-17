@@ -24,7 +24,7 @@ class VacationModel {
     private static validationSchema = Joi.object({
         vacationId: Joi.number().optional().positive().integer(),
         destination: Joi.string().required().min(2).max(50),
-        description: Joi.string().required().min(2).max(500),
+        description: Joi.string().required().min(2).max(1000),
         image: Joi.object().optional(),
         imageName: Joi.string().optional().max(50),
         startDate: Joi.string().required().min(8).max(100),

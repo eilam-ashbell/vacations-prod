@@ -2,6 +2,7 @@ import { Notyf } from "notyf";
 import { type } from "os";
 
 class NotifyService {
+
     // Private field for displaying notifications
     private notify = new Notyf({
         duration: 3000,
@@ -12,7 +13,10 @@ class NotifyService {
                 type: "success",
                 className: 'notification',
                 background: '#0578f2',
-                // icon: false
+            },
+            {
+                type: "error",
+                className: 'notification',
             }
         ]
     });

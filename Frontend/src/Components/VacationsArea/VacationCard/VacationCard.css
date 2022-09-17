@@ -4,14 +4,14 @@
     width: 30%;
     /* max-width: 30%; */
     min-width: 320px;
-    height: 450px;
+    height: 500px;
     border: 1px solid white;
     border-radius: 6px;
     background-color: white;
     overflow: hidden;
     position: relative;
     padding-bottom: 16px;
-    flex-grow: 1;
+    /* flex-grow: 1; */
 }
 .VacationCard .bg-image {
     display: flex;
@@ -54,7 +54,6 @@
     font-size: 18px;
     font-weight: 100;
     color: var(--Neutral-500);
-    /* margin-bottom: 4px; */
     margin-top: auto;
 }
 
@@ -78,6 +77,7 @@
 
 .VacationCard .vacation-description {
     margin-top: 8px;
+    margin-bottom: 16px;
     padding: 0px 4px;
     text-align: justify;
     text-justify: auto;

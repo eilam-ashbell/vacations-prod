@@ -65,7 +65,6 @@ router.put(
         try {
             // get image file from the front
             request.body.image = request.files?.image;
-            console.log(request.body.image);
             // assign vacation ID from URL params to vacation object
             request.body.vacationId = +request.params.vacationId;
             const vacation = new VacationModel(request.body);

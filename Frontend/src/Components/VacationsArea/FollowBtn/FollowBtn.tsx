@@ -4,6 +4,7 @@ import UserModel from "../../../Models/userModel";
 import VacationForUserModel from "../../../Models/vacationForUserModel";
 import { authStore } from "../../../Redux/AuthState";
 import { vacationsStore } from "../../../Redux/VacationsState";
+import notifyService from "../../../Services/NotifyService";
 import vacationsService from "../../../Services/VacationsService";
 import config from "../../../Utils/Config";
 import "./FollowBtn.css";
@@ -30,14 +31,18 @@ function FollowBtn(props: FollowBtnProps): JSX.Element {
     }, [])
 
     function handleFollow() {
-        if (vacation.isFollowing === 0) {
-            setIsFollow(1)
-            setFollowersCount(followersCount + 1)
-            vacationsService.addFollower(user.userUuid, vacation)
-        } else {
-            setIsFollow(0)
-            setFollowersCount(followersCount - 1)
-            vacationsService.removeFollower(user.userUuid, vacation)
+        try {
+            if (vacation.isFollowing === 0) {
+                setIsFollow(1)
+                setFollowersCount(followersCount + 1)
+                vacationsService.addFollower(user.userUuid, vacation)
+            } else {
+                setIsFollow(0)
+                setFollowersCount(followersCount - 1)
+                vacationsService.removeFollower(user.userUuid, vacation)
+            }
+        } catch (err: any) {
+            notifyService.error(err)
         }
     }
 

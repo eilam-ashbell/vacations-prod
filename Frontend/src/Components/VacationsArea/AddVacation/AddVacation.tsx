@@ -35,7 +35,6 @@ function AddVacation(): JSX.Element {
     function onImageChange(e: React.FormEvent<HTMLInputElement>) {
         const files = e.currentTarget.files
         const file = files[0]
-        console.log(file);
         setImage(URL.createObjectURL(file))
     }
 
@@ -63,7 +62,7 @@ function AddVacation(): JSX.Element {
                     <textarea id="description" {...register("description", {
                         required: { value: true, message: "Description is required" },
                         minLength: { value: 2, message: "Description is too short" },
-                        maxLength: { value: 500, message: "Description is too long" }
+                        maxLength: { value: 1000, message: "Description is too long" }
                     })} />
                     <span className="hint">{formState.errors.description?.message}</span>
                 </div>
