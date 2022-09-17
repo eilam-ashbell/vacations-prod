@@ -1,5 +1,6 @@
 import axios from "axios";
 import FollowerModel from "../Models/followerModel";
+import ReportDataModel from "../Models/reportDataModel";
 import VacationForUserModel from "../Models/vacationForUserModel";
 import VacationModel from "../Models/vacationModel";
 import {
@@ -13,18 +14,15 @@ class VacationService {
     public async getAllVacations(
         userUuid: string
     ): Promise<VacationForUserModel[]> {
-        let vacations = vacationsStore.getState().vacations;
-        if (vacations.length === 0) {
             const response = await axios.get<VacationForUserModel[]>(
                 config.routes.getAllVacations + userUuid
             );
-            vacations = response.data;
+            const vacations = response.data;
             const action: VacationsAction = {
                 payload: vacations,
                 type: VacationsActionType.FetchVacations,
             };
             vacationsStore.dispatch(action);
-        }
         return vacations;
     }
 
@@ -93,9 +91,7 @@ class VacationService {
         vacationsStore.dispatch(action);
     }
 
-    public async updateVacation(vacation: VacationModel): Promise<void> {
-        console.log(vacation);
-        
+    public async updateVacation(vacation: VacationModel): Promise<void> {        
         const formData = new FormData();
         formData.append("destination", vacation.destination);
         formData.append("description", vacation.description);
@@ -140,6 +136,13 @@ class VacationService {
             payload: addedVacation
         }
         vacationsStore.dispatch(action)
+    }
+
+    public async getReportData(): Promise<ReportDataModel[]> {
+        const response = await axios.get<ReportDataModel[]>(config.routes.getReportData)
+        let vacationsData = response.data
+        vacationsData = vacationsData.filter(v => v.followersCount !== 0)
+        return vacationsData
     }
 }
 

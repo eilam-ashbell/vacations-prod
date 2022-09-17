@@ -7,6 +7,7 @@ import vacationsService from "../../../Services/VacationsService";
 import config from "../../../Utils/Config";
 import formUtils from "../../../Utils/formUtils";
 import "./EditVacation.css";
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 function EditVacation(): JSX.Element {
 
@@ -18,7 +19,7 @@ function EditVacation(): JSX.Element {
     useEffect(() => {
         // Get vacation ID from URL
         const vacationId = +params.vacationId
-        
+
         // Get vacations data for that vacation ID
         vacationsService.getVacation(vacationId).then(vacation => {
             setValue("vacationId", vacation.vacationId)
@@ -40,7 +41,7 @@ function EditVacation(): JSX.Element {
     async function send(vacation: VacationModel) {
         try {
             console.log(vacation);
-            
+
             // Send updated data
             await vacationsService.updateVacation(vacation)
 
@@ -66,7 +67,12 @@ function EditVacation(): JSX.Element {
 
     return (
         <div className="EditVacation">
-
+            <div className="action-nav">
+                <button onClick={() => navigate('/home')}>
+                    <ChevronLeftIcon sx={{ color: "inherent", fontSize: 16, marginRight: "8px" }} />
+                    Back
+                </button>
+            </div>
             <form onSubmit={handleSubmit(send)}>
                 <h2>Edit Vacation</h2>
 
@@ -126,9 +132,9 @@ function EditVacation(): JSX.Element {
                 <div className="input-label-wrapper">
                     <label htmlFor="image" id="imgLabel">
                         cover image
-                        <div 
-                        className="image-change"
-                        style={{backgroundImage: `url(${image})`}}
+                        <div
+                            className="image-change"
+                            style={{ backgroundImage: `url(${image})` }}
                         >
                             <span>Change Image</span>
                         </div>

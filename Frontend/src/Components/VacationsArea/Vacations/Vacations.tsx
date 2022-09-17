@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddIcon from '@mui/icons-material/Add';
 import notifyService from "../../../Services/NotifyService";
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 
 function Vacations(): JSX.Element {
 
@@ -32,7 +33,7 @@ function Vacations(): JSX.Element {
     // Get all vacation for specific user on load
     useEffect(() => {
         if (!authStore.getState().token) navigate("/login")
-
+        // notifyService.success("test")
         // Extract user object from token
         const container: { user: UserModel } = jwtDecode(authStore.getState().token)
         const user = container.user
@@ -41,19 +42,19 @@ function Vacations(): JSX.Element {
 
             // Get vacation for this user
             vacationsService.getAllVacations(user.userUuid)
-            .then(result => {
+                .then(result => {
 
-                // Set results in local state
-                setVacations(result)
+                    // Set results in local state
+                    setVacations(result)
 
-            }).catch(err => {
-                notifyService.error(err)
-                // const action: AuthAction = {
-                //     type: AuthActionType.Logout
-                // }
-                // authStore.dispatch(action)
-                // navigate("/login")
-            })
+                }).catch(err => {
+                    notifyService.error(err)
+                    // const action: AuthAction = {
+                    //     type: AuthActionType.Logout
+                    // }
+                    // authStore.dispatch(action)
+                    // navigate("/login")
+                })
         } else {
             setVacations(vacations.filter(v => v.isFollowing === 1))
         }
@@ -98,19 +99,28 @@ function Vacations(): JSX.Element {
     return (
         <div className="Vacations">
             <div className="action-nav">
+                {
+                    authStore.getState().user.roleId !== 1 &&
                 <button
-                    className={isFiltered ? "active" : ""}
-                    onClick={() => isFiltered ? setIsFiltered(false) : setIsFiltered(true)}
+                className={isFiltered ? "active" : ""}
+                onClick={() => isFiltered ? setIsFiltered(false) : setIsFiltered(true)}
                 >
                     <FavoriteIcon sx={{ color: "inherent", fontSize: 16, marginRight: "8px" }}
                     />
                     My Vacation
                 </button>
+                }
                 {authStore.getState().user.roleId === 1 &&
-                    <button onClick={() => navigate('/add')}>
-                        <AddIcon sx={{ color: "inherent", fontSize: 16, marginRight: "8px" }} />
-                        Add Vacation
-                    </button>
+                    <div className="admin-functions">
+                        <button onClick={() => navigate('/add')}>
+                            <AddIcon sx={{ color: "inherent", fontSize: 16, marginRight: "8px" }} />
+                            Add Vacation
+                        </button>
+                        <button onClick={() => navigate('/report')}>
+                            <LeaderboardIcon sx={{ color: "inherent", fontSize: 16, marginRight: "8px" }} />
+                            View Report
+                        </button>
+                    </div>
                 }
             </div>
             <div className="vacations-align">

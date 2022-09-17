@@ -38,7 +38,7 @@
 .VacationCard .admin-wrapper {
     display: flex;
     position: absolute;
-    right: 16px;
+    left: 16px;
     column-gap: 8px;
 }
 

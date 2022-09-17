@@ -12,7 +12,7 @@ class Config {
         deleteVacation: this.serverUrl + "api/vacations/",
         updateVacation: this.serverUrl + "api/vacations/",
         addVacation: this.serverUrl + "api/vacation/",
-
+        getReportData: this.serverUrl + "api/report",
     }
     public numOfVacationsOnPage = 3
 }

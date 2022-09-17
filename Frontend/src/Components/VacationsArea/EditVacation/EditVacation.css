@@ -117,3 +117,23 @@ span:last-of-type {
 .EditVacation form input#image {
     opacity: 0;
 }
+
+.EditVacation .action-nav {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    padding: 16px 0px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--Neutral-200);
+}
+.EditVacation .action-nav button {
+    display: flex;
+    border: 1px solid transparent;
+    color: var(--Neutral-700);
+    justify-content: center;
+    align-items: center;
+}
+.EditVacation .action-nav button:hover {
+    border: 1px solid var(--Prime-500);
+    color: var(--Prime-500);
+}

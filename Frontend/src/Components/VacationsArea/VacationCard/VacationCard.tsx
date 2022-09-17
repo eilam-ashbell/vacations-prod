@@ -56,7 +56,10 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                 className="bg-image"
                 style={bgImageStyle}
             >
+                {
+                    authStore.getState().user.roleId !== 1 &&
                 <FollowBtn vacation={props.vacationData} />
+                }
                 {
                     authStore.getState().user.roleId === 1 &&
                     <div className="admin-wrapper">

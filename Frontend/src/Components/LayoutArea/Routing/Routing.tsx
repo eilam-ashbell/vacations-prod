@@ -5,6 +5,7 @@ import Logout from "../../AuthArea/Logout/Logout";
 import Register from "../../AuthArea/Register/Register";
 import AddVacation from "../../VacationsArea/AddVacation/AddVacation";
 import EditVacation from "../../VacationsArea/EditVacation/EditVacation";
+import Report from "../../VacationsArea/Report/Report";
 import Vacations from "../../VacationsArea/Vacations/Vacations";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import "./Routing.css";
@@ -31,6 +32,9 @@ function Routing(): JSX.Element {
 
                 {/* Add vacation form for admin */}
                 <Route path="/add" element={<AddVacation />} />
+
+                {/* Vacation report for admin */}
+                <Route path="/report" element={<Report />} />
 
                 {/* 404 page */}
                 <Route path="*" element={<PageNotFound />} />

@@ -4,14 +4,15 @@ import { type } from "os";
 class NotifyService {
     // Private field for displaying notifications
     private notify = new Notyf({
-        duration: 4000,
+        duration: 3000,
         position: { x: "right", y: "bottom" },
         ripple: false,
         types: [
             {
                 type: "success",
-                // background: 'red',
-                className: 'notification'
+                className: 'notification',
+                background: '#0578f2',
+                // icon: false
             }
         ]
     });

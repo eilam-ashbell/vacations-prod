@@ -9,7 +9,6 @@
     flex-wrap: wrap;
     column-gap: 16px;
     row-gap: 16px;
-    /* justify-content: center; */
 }
 
 .Vacations .pagination-wrapper {
@@ -34,7 +33,6 @@
     align-items: center;
 }
 .Vacations .action-nav button:hover {
-    /* background-color: var(--Prime-200); */
     border: 1px solid var(--Prime-500);
     color: var(--Prime-500);
 }
@@ -43,4 +41,10 @@
     background-color: var(--Prime-500);
     border: 1px solid transparent;
     color: white;
+}
+
+.Vacations .admin-functions {
+    display: flex;
+    column-gap: 8px;
+    margin-left: auto;
 }

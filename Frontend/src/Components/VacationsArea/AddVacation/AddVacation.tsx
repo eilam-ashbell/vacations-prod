@@ -6,6 +6,7 @@ import notifyService from "../../../Services/NotifyService";
 import vacationsService from "../../../Services/VacationsService";
 import formUtils from "../../../Utils/formUtils";
 import "./AddVacation.css";
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 function AddVacation(): JSX.Element {
 
@@ -40,7 +41,12 @@ function AddVacation(): JSX.Element {
 
     return (
         <div className="AddVacation">
-
+            <div className="action-nav">
+                <button onClick={() => navigate('/home')}>
+                    <ChevronLeftIcon sx={{ color: "inherent", fontSize: 16, marginRight: "8px" }} />
+                    Back
+                </button>
+            </div>
             <form onSubmit={handleSubmit(send)}>
                 <h2>Add Vacation</h2>
                 <div className="input-label-wrapper">
