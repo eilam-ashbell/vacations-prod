@@ -7,19 +7,6 @@ import vacationLogic from "../5-logic/vacation-logic";
 
 const router = express.Router();
 
-// GET all vacations data
-// router.get(
-//     "/api/vacations",
-//     async (request: Request, response: Response, next: NextFunction) => {
-//         try {
-//             const vacations = await vacationLogic.getAllVacations();
-//             response.json(vacations);
-//         } catch (err: any) {
-//             next(err);
-//         }
-//     }
-// );
-
 // GET all vacation for a specific user with followers data
 router.get(
     "/api/vacations/:userUuid",
@@ -144,7 +131,7 @@ router.delete(
 
 // GET vacations data for report
 router.get(
-    "/api/vacations/report",
+    "/api/report",
     verifyAdmin,
     async (request: Request, response: Response, next: NextFunction) => {
         try {

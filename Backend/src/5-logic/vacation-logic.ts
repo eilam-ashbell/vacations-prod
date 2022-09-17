@@ -23,13 +23,8 @@ async function getAllVacations(): Promise<VacationModel[]> {
 async function getAllVacationsForUser(
     userUuid: string
 ): Promise<VacationFollowersModel[]> {
-    const test = "SELECT userId FROM users WHERE userUuid = ?"
-    const testRes = await dal.execute(test, [userUuid]);
-    console.log(testRes);
-    
     const sql =
         "SELECT DISTINCT V.*, EXISTS(SELECT * FROM followers WHERE vacationId = F.vacationId AND userId = (SELECT userId FROM users WHERE userUuid = ?)) AS isFollowing, COUNT(F.userId) AS followersCount FROM vacations as V LEFT JOIN followers as F ON V.vacationId = F.vacationId GROUP BY vacationId ORDER BY startDate ASC";
-        // isFollowing
     const vacations = await dal.execute(sql, [userUuid]);
     return vacations;
 }
@@ -151,7 +146,7 @@ async function unFollowVacation(
 // GET vacations data for report
 async function getVacationsDataToReport(): Promise<VacationFollowersModel[]> {
     const sql =
-        "SELECT DISTINCT V.vacationId, COUNT(F.userId) AS followersCount FROM vacations as V LEFT JOIN followers as F ON V.vacationId = F.vacationId GROUP BY vacationId ORDER BY followersCount DESC";
+        "SELECT V.vacationId, V.destination, COUNT(F.userId) AS followersCount FROM vacations as V LEFT JOIN followers as F ON V.vacationId = F.vacationId GROUP BY vacationId";
     const vacationsData = await dal.execute(sql, []);
     return vacationsData;
 }
