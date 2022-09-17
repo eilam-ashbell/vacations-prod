@@ -11,7 +11,9 @@ import { vacationsStore } from "../../../Redux/VacationsState";
 import { useBadge } from "@mui/base";
 import config from "../../../Utils/Config";
 import { useNavigate } from "react-router-dom";
-
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import AddIcon from '@mui/icons-material/Add';
+import notifyService from "../../../Services/NotifyService";
 
 function Vacations(): JSX.Element {
 
@@ -24,26 +26,38 @@ function Vacations(): JSX.Element {
         from: 0,
         to: pageSize
     })
+    const [isFiltered, setIsFiltered] = useState<boolean>(false)
+
 
     // Get all vacation for specific user on load
     useEffect(() => {
         if (!authStore.getState().token) navigate("/login")
+
         // Extract user object from token
         const container: { user: UserModel } = jwtDecode(authStore.getState().token)
         const user = container.user
-        // Get vacation for this user
 
-        vacationsService.getAllVacations(user.userUuid).then(result => {
-            // Set results in local state
-            setVacations(result)
-        }).catch( err => {
-            const action: AuthAction = {
-                type: AuthActionType.Logout
-            }
-            authStore.dispatch(action)
-            navigate("/login")
-        })
-    }, [])
+        if (!isFiltered) {
+
+            // Get vacation for this user
+            vacationsService.getAllVacations(user.userUuid)
+            .then(result => {
+
+                // Set results in local state
+                setVacations(result)
+
+            }).catch(err => {
+                notifyService.error(err)
+                // const action: AuthAction = {
+                //     type: AuthActionType.Logout
+                // }
+                // authStore.dispatch(action)
+                // navigate("/login")
+            })
+        } else {
+            setVacations(vacations.filter(v => v.isFollowing === 1))
+        }
+    }, [isFiltered])
 
     useEffect(() => {
 
@@ -83,6 +97,22 @@ function Vacations(): JSX.Element {
 
     return (
         <div className="Vacations">
+            <div className="action-nav">
+                <button
+                    className={isFiltered ? "active" : ""}
+                    onClick={() => isFiltered ? setIsFiltered(false) : setIsFiltered(true)}
+                >
+                    <FavoriteIcon sx={{ color: "inherent", fontSize: 16, marginRight: "8px" }}
+                    />
+                    My Vacation
+                </button>
+                {authStore.getState().user.roleId === 1 &&
+                    <button onClick={() => navigate('/add')}>
+                        <AddIcon sx={{ color: "inherent", fontSize: 16, marginRight: "8px" }} />
+                        Add Vacation
+                    </button>
+                }
+            </div>
             <div className="vacations-align">
                 <div className="vacations-wrapper">
                     {

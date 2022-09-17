@@ -15,7 +15,7 @@
 }
 .VacationCard .bg-image {
     display: flex;
-    height: 160px;
+    height: 300px;
     width: 100%;
     background-position: center;
     background-size: cover;
@@ -43,12 +43,24 @@
 }
 
 .VacationCard .card-body {
-    margin: 24px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 24px 24px 0px 24px;
+    color: var(--Neutral-700);
 }
 
 .VacationCard h4 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 100;
+    color: var(--Neutral-500);
+    /* margin-bottom: 4px; */
+    margin-top: auto;
+}
+
+.VacationCard h4 span {
+    font-size: 20px;
+    font-weight: 400;
     color: var(--Prime-500);
     margin-bottom: 4px;
 }
@@ -56,24 +68,16 @@
 .VacationCard .vacation-dates {
     font-size: 14px;
     font-weight: 100;
-    color: var(--Neutral-700);
     display: flex;
     flex-direction: row;
     column-gap: 6px;
-    align-items: center;
+    align-items: end;
     margin-bottom: 16px;
 
 }
 
-.VacationCard hr {
-    /* border: 0.5px solid hwb(0 100% 8%); */
-    border: 0.5px solid var(--Neutral-100);
-
-    border-top: 0px;
-}
-
 .VacationCard .vacation-description {
-    margin-top: 16px;
+    margin-top: 8px;
     padding: 0px 4px;
     text-align: justify;
     text-justify: auto;

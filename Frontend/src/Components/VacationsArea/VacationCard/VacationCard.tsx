@@ -82,7 +82,6 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                 <h3>{props.vacationData.destination}</h3>
             </div>
             <div className="card-body">
-                <h4>Start at: ${props.vacationData.price}</h4>
                 <span className="vacation-dates">
                     <span className="from-date">{formatDate(props.vacationData.startDate)}
                     </span>
@@ -90,9 +89,9 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                     <span className="till-date">{formatDate(props.vacationData.endDate)}
                     </span>
                     </span>
-                <hr />
                 <p className="vacation-description">{props.vacationData.description}
                 </p>
+                <h4>from: <span>${props.vacationData.price}</span></h4>
             </div>
         </div>
     );

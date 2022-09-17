@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import VacationModel from "../../../Models/vacationModel";
+import notifyService from "../../../Services/NotifyService";
 import vacationsService from "../../../Services/VacationsService";
+import formUtils from "../../../Utils/formUtils";
 import "./AddVacation.css";
 
 function AddVacation(): JSX.Element {
@@ -15,11 +17,17 @@ function AddVacation(): JSX.Element {
     async function send(vacation: VacationModel) {
         try {
             await vacationsService.addVacation(vacation)
+
             // notify message
+            notifyService.success("Vacation has been added")
+
+            // Redirect to home page
             navigate("/home")
 
         } catch (err: any) {
+
             // notify message
+            notifyService.success(err)
         }
     }
 
@@ -28,15 +36,15 @@ function AddVacation(): JSX.Element {
         const file = files[0]
         console.log(file);
         setImage(URL.createObjectURL(file))
-
     }
 
     return (
         <div className="AddVacation">
-			
+
             <form onSubmit={handleSubmit(send)}>
+                <h2>Add Vacation</h2>
                 <div className="input-label-wrapper">
-                    <label htmlFor="destination">Destination</label>
+                    <label htmlFor="destination">destination</label>
                     <input type="text" id="destination" {...register("destination", {
                         required: { value: true, message: "Destination is required" },
                         minLength: { value: 2, message: "Destination is too short" },
@@ -45,7 +53,7 @@ function AddVacation(): JSX.Element {
                     <span className="hint">{formState.errors.destination?.message}</span>
                 </div>
                 <div className="input-label-wrapper">
-                    <label htmlFor="description">Description</label>
+                    <label htmlFor="description">description</label>
                     <textarea id="description" {...register("description", {
                         required: { value: true, message: "Description is required" },
                         minLength: { value: 2, message: "Description is too short" },
@@ -54,41 +62,65 @@ function AddVacation(): JSX.Element {
                     <span className="hint">{formState.errors.description?.message}</span>
                 </div>
                 <div className="input-label-wrapper">
-                    <label htmlFor="startDate">Start on</label>
-                    <input type="date" id="startDate" {...register("startDate", {
-                        required: { value: true, message: "Start date is required" },
-                        minLength: { value: 8, message: "Start date is too short" },
-                        maxLength: { value: 100, message: "Start date is too long" }
-                    })} />
+                    <label htmlFor="startDate">start on</label>
+                    <input
+                        min={formUtils.disablePastDate(0)}
+                        type="date"
+                        id="startDate"
+                        {...register("startDate", {
+                            required: { value: true, message: "Start date is required" },
+                            minLength: { value: 8, message: "Start date is too short" },
+                            maxLength: { value: 100, message: "Start date is too long" }
+                        })} />
                     <span className="hint">{formState.errors.startDate?.message}</span>
                 </div>
                 <div className="input-label-wrapper">
-                    <label htmlFor="endDate">End on</label>
-                    <input type="date" id="endDate" {...register("endDate", {
-                        required: { value: true, message: "Start date is required" },
-                        minLength: { value: 8, message: "Start date is too short" },
-                        maxLength: { value: 100, message: "Start date is too long" },
-                    })} />
+                    <label htmlFor="endDate">end on</label>
+                    <input
+                        min={formUtils.disablePastDate(1)}
+                        type="date"
+                        id="endDate"
+                        {...register("endDate", {
+                            required: { value: true, message: "Start date is required" },
+                            minLength: { value: 8, message: "Start date is too short" },
+                            maxLength: { value: 100, message: "Start date is too long" },
+                        })} />
                     <span className="hint">{formState.errors.endDate?.message}</span>
                 </div>
                 <div className="input-label-wrapper">
-                    <label htmlFor="price">Price</label>
-                    <input type="number" id="price" {...register("price", {
+                    <label htmlFor="price">price</label>
+                    <input type="number" id="price" step="0.01"{...register("price", {
                         required: { value: true, message: "Price is required" },
                         min: { value: 0, message: "Username is too short" },
                     })} />
                     <span className="hint">{formState.errors.price?.message}</span>
                 </div>
                 <div className="input-label-wrapper">
-                    <label htmlFor="image" id="imgLabel">Change image
-                        <img src={image} />
+                    <label htmlFor="image" id="imgLabel">
+                        cover image
+                        <div
+                            className={image ? "image-change" : "image-change no-image"}
+                            style={image && { backgroundImage: `url(${image})` }}
+                        >
+                            <span>
+                                {image ? "Change Image" : "Select Image"}
+                            </span>
+                        </div>
                     </label>
-                    <input type="file" id="image" accept="image/*" {...register("image")} onChange={onImageChange} />
+                    <input type="file" id="image" accept="image/*" {...register("image", {
+                        required: { value: true, message: "Image required" }
+                    })} onChange={onImageChange} />
                     <span className="hint">{formState.errors.image?.message}</span>
                 </div>
                 <button>Add Vacation</button>
+                <button
+                    className="secondary"
+                    onClick={() => navigate("/home")}
+                >
+                    Cancel
+                </button>
             </form>
-            
+
         </div>
     );
 }

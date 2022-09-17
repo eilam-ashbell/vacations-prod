@@ -4,8 +4,8 @@
     left: -24px;
     /* transform: translate(-50%, -50%); */
     transform: scale(0.5);
-
 }
+
 .FollowBtn .content {
     padding: 13px 16px;
     display: flex;
@@ -16,6 +16,12 @@
     background-color: white;
     cursor: pointer;
     width: 105%;
+    transition: all;
+    transition-duration: 200ms;
+}
+.FollowBtn .content:hover {
+    border-color: hwb(350 73% 4%);
+    background: hwb(349 82% 2%);
 }
 
 .FollowBtn .content.heart-active {
