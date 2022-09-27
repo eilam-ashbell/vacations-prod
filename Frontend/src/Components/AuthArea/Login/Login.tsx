@@ -25,8 +25,6 @@ function Login(): JSX.Element {
             // notify message
             notifyService.success("Welcome back " + credentials.username)
 
-            console.log(location);
-            
             // Redirect to home
             navigate(path || "/home")
 

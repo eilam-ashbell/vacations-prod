@@ -40,7 +40,6 @@ function EditVacation(): JSX.Element {
 
     async function send(vacation: VacationModel) {
         try {
-            console.log(vacation);
 
             // Send updated data
             await vacationsService.updateVacation(vacation)
@@ -61,7 +60,6 @@ function EditVacation(): JSX.Element {
     function onImageChange(e: React.FormEvent<HTMLInputElement>) {
         const files = e.currentTarget.files
         const file = files[0]
-        console.log(file);
         setImage(URL.createObjectURL(file))
     }
 

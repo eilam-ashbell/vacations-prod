@@ -3,6 +3,7 @@ import fs from "fs";
 
 async function safeDelete(fileName: string): Promise<void> {
     try {
+        // if there is no file name > do nothing
         if (!fileName) return;
         if (fs.existsSync(fileName)) {
             // Check if file exist

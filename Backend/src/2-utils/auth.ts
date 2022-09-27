@@ -1,12 +1,11 @@
-import { JsonWebTokenError } from "jsonwebtoken";
 import UserModel from "../4-models/user-model";
 import jwt from "jsonwebtoken";
-import RoleModel from "../4-models/role-model";
 
 const secretKey = "weAreOnVacation!";
 
 function generateNewToken(user: UserModel): string {
-    // Create object to insert inside the token
+
+    // Create container object to insert inside the token
     const container = { user };
 
     // Generate new token
@@ -26,6 +25,8 @@ function verifyToken(authHeader: string): Promise<boolean> {
 
             // extract the token from the header
             const token = authHeader.substring(7);
+            
+            // If the header is empty > verify fail
             if (!token) {
                 resolve(false);
                 return;

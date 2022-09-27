@@ -8,6 +8,7 @@ import hash from "../2-utils/cyber";
 import { v4 as uuid } from "uuid";
 
 async function register(user: UserModel): Promise<string> {
+    
     // Hash user password
     user.password = hash(user.password);
 

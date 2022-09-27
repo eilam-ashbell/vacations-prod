@@ -52,11 +52,9 @@ function Vacations(): JSX.Element {
 
                 }).catch(err => {
                     notifyService.error(err)
-                    // const action: AuthAction = {
-                    //     type: AuthActionType.Logout
-                    // }
-                    // authStore.dispatch(action)
-                    // navigate("/login")
+                    if (err.response?.data === "You are not logged in"){
+                        navigate("/logout")
+                    }
                 })
         } else {
             setVacations(vacations.filter(v => v.isFollowing === 1))
@@ -110,7 +108,7 @@ function Vacations(): JSX.Element {
                 >
                     <FavoriteIcon sx={{ color: "inherent", fontSize: 16, marginRight: "8px" }}
                     />
-                    My Vacation
+                    My Vacations
                 </button>
                 }
                 {authStore.getState().user.roleId === 1 &&

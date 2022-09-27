@@ -11,8 +11,6 @@ function catchAll(
         // Log error to console:
         console.log(err);
 
-        // log error to log file...
-
         // Get status code:
         const statusCode = err.status ? err.status : 500;
 
