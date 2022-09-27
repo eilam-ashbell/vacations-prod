@@ -1,14 +1,22 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CredentialsModel from "../../../Models/credentialsModel";
 import authService from "../../../Services/AuthService";
 import notifyService from "../../../Services/NotifyService";
 import "./Login.css";
 
+interface LocationState {
+    path: {
+        pathname: string;
+    };
+}
+
 function Login(): JSX.Element {
 
     const { register, handleSubmit, formState } = useForm<CredentialsModel>()
     const navigate = useNavigate()
+    const location = useLocation()
+    const path = (location.state as LocationState)?.path
 
     async function send(credentials: CredentialsModel) {
         try {
@@ -17,8 +25,10 @@ function Login(): JSX.Element {
             // notify message
             notifyService.success("Welcome back " + credentials.username)
 
+            console.log(location);
+            
             // Redirect to home
-            navigate("/home")
+            navigate(path || "/home")
 
         } catch (err: any) {
             // notify message
@@ -49,8 +59,8 @@ function Login(): JSX.Element {
                     <span className="hint">{formState.errors.password?.message}</span>
                 </div>
                 <button>Login</button>
-                <span>don't have account? <br/>
-                     <a onClick={() => navigate("/register")}>register now</a>
+                <span>don't have account? <br />
+                    <a onClick={() => navigate("/register")}>register now</a>
                 </span>
             </form>
         </div>

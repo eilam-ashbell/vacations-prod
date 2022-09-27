@@ -28,11 +28,15 @@ function Vacations(): JSX.Element {
     })
     const [isFiltered, setIsFiltered] = useState<boolean>(false)
 
+    // useEffect(() => {
+    //     if (!authStore.getState().token) navigate("/login")
+
+    // },[])
 
     // Get all vacation for specific user on load
     useEffect(() => {
-        if (!authStore.getState().token) navigate("/login")
-        // notifyService.success("test")
+        
+
         // Extract user object from token
         const container: { user: UserModel } = jwtDecode(authStore.getState().token)
         const user = container.user
