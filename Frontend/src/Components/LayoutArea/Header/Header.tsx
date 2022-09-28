@@ -22,7 +22,7 @@ function Header(): JSX.Element {
 
     return (
         <div className="Header">
-            <h3>Vacations</h3>
+            <h3>Vacations.com</h3>
 
             <div className="user-data">
                 {

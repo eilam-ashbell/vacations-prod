@@ -58,7 +58,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
             >
                 {
                     authStore.getState().user.roleId !== 1 &&
-                    <FollowBtn vacation={props.vacationData} />
+                <FollowBtn vacation={props.vacationData} />
                 }
                 {
                     authStore.getState().user.roleId === 1 &&
@@ -84,23 +84,17 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                 }
                 <h3>{props.vacationData.destination}</h3>
             </div>
-            <div className="dates-wrapper">
+            <div className="card-body">
                 <span className="vacation-dates">
                     <span className="from-date">{formatDate(props.vacationData.startDate)}
                     </span>
                     <KeyboardArrowRightIcon />
                     <span className="till-date">{formatDate(props.vacationData.endDate)}
                     </span>
-                </span>
-                <div className="cards-connection">
-
-            </div>
-            </div>
-            
-            <div className="card-body">
+                    </span>
                 <p className="vacation-description">{props.vacationData.description}
                 </p>
-                <h4>${props.vacationData.price}</h4>
+                <h4>from: <span>${props.vacationData.price}</span></h4>
             </div>
         </div>
     );

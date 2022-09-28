@@ -1,4 +1,5 @@
-import express from "express";
+// import express from "express";
+import express from "express"
 import cors from "cors";
 import catchAll from "./3-middleware/catch-all";
 import routeNotFound from "./3-middleware/route-not-found";
