@@ -11,7 +11,7 @@ import { VacationsAction, VacationsActionType, vacationsStore } from "../../../R
 import { authStore } from "../../../Redux/AuthState";
 import vacationsService from "../../../Services/VacationsService";
 import { useNavigate } from "react-router-dom";
-
+import EventIcon from '@mui/icons-material/Event';
 interface VacationCardProps {
     vacationData: VacationForUserModel;
 }
@@ -58,7 +58,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
             >
                 {
                     authStore.getState().user.roleId !== 1 &&
-                <FollowBtn vacation={props.vacationData} />
+                    <FollowBtn vacation={props.vacationData} />
                 }
                 {
                     authStore.getState().user.roleId === 1 &&
@@ -84,17 +84,20 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                 }
                 <h3>{props.vacationData.destination}</h3>
             </div>
-            <div className="card-body">
+            <div className="dates-wrapper">
+                <EventIcon sx={{ fontSize: 18 }} />
                 <span className="vacation-dates">
-                    <span className="from-date">{formatDate(props.vacationData.startDate)}
+                    <span className="from-date">{formatDate(props.vacationData.startDate)
+                        + " - " +
+                        formatDate(props.vacationData.endDate)}
                     </span>
-                    <KeyboardArrowRightIcon />
-                    <span className="till-date">{formatDate(props.vacationData.endDate)}
-                    </span>
-                    </span>
+                </span>
+                <div className="cards-placeholder"></div>
+            </div>
+            <div className="card-body">
                 <p className="vacation-description">{props.vacationData.description}
                 </p>
-                <h4>from: <span>${props.vacationData.price}</span></h4>
+                <h4>${props.vacationData.price}</h4>
             </div>
         </div>
     );
