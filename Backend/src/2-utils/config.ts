@@ -1,5 +1,5 @@
 class Config {
-    public port = 3001;
+    public port = 80;
     public mysql = {
         mysqlHost: "localhost",
         mysqlUser: "root",

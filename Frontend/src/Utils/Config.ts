@@ -1,5 +1,5 @@
 class Config {
-    public serverUrl = "http://localhost:3001/";
+    public serverUrl = "https://43.206.149.169/";
     public serverStaticsImages = this.serverUrl + "static/images/"
     public serverStaticsIcons = this.serverUrl + "static/icons/"
     public routes = {
