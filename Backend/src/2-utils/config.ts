@@ -1,7 +1,7 @@
 class Config {
     public port = 3000;
     public mysql = {
-        mysqlHost: "ec2-18-183-6-194.ap-northeast-1.compute.amazonaws.com",
+        mysqlHost: "127.0.0.1",
         mysqlUser: "root",
         mysqlPassword: "eashbell6311",
         mysqlDatabase: "vacations",
