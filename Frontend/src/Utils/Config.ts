@@ -1,5 +1,5 @@
 class Config {
-    public serverUrl = "https://43.206.149.169/80";
+    public serverUrl = "https://vacations-prod-production.up.railway.app/";
     public serverStaticsImages = this.serverUrl + "static/images/"
     public serverStaticsIcons = this.serverUrl + "static/icons/"
     public routes = {
