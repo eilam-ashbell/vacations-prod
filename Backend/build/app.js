@@ -39,4 +39,4 @@ server.use("/", auth_controller_1.default);
 server.use("*", route_not_found_1.default);
 // Catch all middleware
 server.use(catch_all_1.default);
-server.listen(process.env.PORT, function () { return console.log('Listening on http://localhost: + ${process.env.PORT}'); });
+server.listen(process.env.PORT || 3000, function () { return console.log("Listening on port: ".concat(process.env.PORT)); });

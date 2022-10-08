@@ -1,10 +1,10 @@
 class Config {
-    public port = 7678;
+    public port = 3000;
     public mysql = {
-        mysqlHost: "containers-us-west-82.railway.app",
+        mysqlHost: "ec2-18-183-6-194.ap-northeast-1.compute.amazonaws.com",
         mysqlUser: "root",
-        mysqlPassword: "y4n1qxQfZDno4rbauVj0",
-        mysqlDatabase: "railway",
+        mysqlPassword: "eashbell6311",
+        mysqlDatabase: "vacations",
     };
     public imagesFolderPath = "./src/1-assets/images/";
     public devMode = true;

@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config = /** @class */ (function () {
     function Config() {
-        this.port = 80;
+        this.port = 3000;
         this.mysql = {
-            mysqlHost: "localhost",
+            mysqlHost: "ec2-18-183-6-194.ap-northeast-1.compute.amazonaws.com",
             mysqlUser: "root",
-            mysqlPassword: "",
+            mysqlPassword: "eashbell6311",
             mysqlDatabase: "vacations",
         };
         this.imagesFolderPath = "./src/1-assets/images/";
