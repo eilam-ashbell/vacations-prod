@@ -9,7 +9,6 @@ var cors_1 = __importDefault(require("cors"));
 var catch_all_1 = __importDefault(require("./3-middleware/catch-all"));
 var route_not_found_1 = __importDefault(require("./3-middleware/route-not-found"));
 var vacation_controller_1 = __importDefault(require("./6-controllers/vacation-controller"));
-var config_1 = __importDefault(require("./2-utils/config"));
 var express_fileupload_1 = __importDefault(require("express-fileupload"));
 var auth_controller_1 = __importDefault(require("./6-controllers/auth-controller"));
 var sanitize_1 = __importDefault(require("./3-middleware/sanitize"));
@@ -40,4 +39,4 @@ server.use("/", auth_controller_1.default);
 server.use("*", route_not_found_1.default);
 // Catch all middleware
 server.use(catch_all_1.default);
-server.listen(config_1.default.port, function () { return console.log("Listening on http://localhost:" + config_1.default.port); });
+server.listen(process.env.PORT, function () { return console.log('Listening on http://localhost: + ${process.env.PORT}'); });
