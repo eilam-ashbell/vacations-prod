@@ -1,10 +1,10 @@
 class Config {
-    public port = 80;
+    public port = 7678;
     public mysql = {
-        mysqlHost: "localhost",
+        mysqlHost: "containers-us-west-82.railway.app",
         mysqlUser: "root",
-        mysqlPassword: "",
-        mysqlDatabase: "vacations",
+        mysqlPassword: "y4n1qxQfZDno4rbauVj0",
+        mysqlDatabase: "railway",
     };
     public imagesFolderPath = "./src/1-assets/images/";
     public devMode = true;
