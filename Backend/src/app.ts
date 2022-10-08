@@ -50,4 +50,4 @@ server.use("*", routeNotFound);
 // Catch all middleware
 server.use(catchAll);
 
-server.listen(config.port, () => console.log("Listening on http://localhost:" + config.port));
+server.listen(process.env.PORT, () => console.log('Listening on http://localhost: + ${process.env.PORT}'));

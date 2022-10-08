@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "node src/app.js"
+        "start": "ts-node src/app.ts"
     },
     "keywords": [],
     "author": "",
@@ -27,6 +27,7 @@
         "jsonwebtoken": "^8.5.1",
         "mysql": "^2.18.1",
         "striptags": "^3.2.0",
+        "ts-node": "^10.9.1",
         "uuid": "^8.3.2"
     }
 }
