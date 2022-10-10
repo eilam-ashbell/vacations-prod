@@ -2,6 +2,7 @@ class Config {
     public port = 3000;
     public mysql = {
         mysqlHost: "localhost",
+        mysqlPort: "3306",
         mysqlUser: "root",
         mysqlPassword: "eashbell6311",
         mysqlDatabase: "vacations",
