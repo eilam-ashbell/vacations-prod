@@ -7,7 +7,7 @@ class Config {
         mysqlPassword: "eashbell6311",
         mysqlDatabase: "vacations",
     };
-    public imagesFolderPath = __dirname + "../1-assets/images/";
+    public imagesFolderPath = "/home/ubuntu/vacations-prod/Backend/build/1-assets/images/";
     public devMode = true;
 }
 

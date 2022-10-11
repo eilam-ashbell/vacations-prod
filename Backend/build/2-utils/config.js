@@ -10,7 +10,7 @@ var Config = /** @class */ (function () {
             mysqlPassword: "eashbell6311",
             mysqlDatabase: "vacations",
         };
-        this.imagesFolderPath = __dirname + "../1-assets/images/";
+        this.imagesFolderPath = "/home/ubuntu/vacations-prod/Backend/build/1-assets/images/";
         this.devMode = true;
     }
     return Config;
