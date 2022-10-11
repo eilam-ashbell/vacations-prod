@@ -27,7 +27,7 @@ server.use(cors());
 // Read the body json object
 server.use(express.json());
 
-server.use('/static',express.static('src/1-assets'))
+server.use('/static',express.static(__dirname + '/1-assets'))
 
 // Sanitize tags from requests
 server.use(sanitize)
@@ -50,4 +50,4 @@ server.use("*", routeNotFound);
 // Catch all middleware
 server.use(catchAll);
 
-server.listen(process.env.PORT || 3000, () => console.log(`Listening on port: ${process.env.PORT}`));
+server.listen(process.env.PORT || 3000, () => console.log(`Listening on port: ${process.env.PORT || 3000}`));

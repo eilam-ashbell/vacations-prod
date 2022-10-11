@@ -24,7 +24,7 @@ var server = (0, express_1.default)();
 server.use((0, cors_1.default)());
 // Read the body json object
 server.use(express_1.default.json());
-server.use('/static', express_1.default.static('src/1-assets'));
+server.use('/static', express_1.default.static(__dirname + '/1-assets'));
 // Sanitize tags from requests
 server.use(sanitize_1.default);
 // Auth
@@ -39,4 +39,4 @@ server.use("/", auth_controller_1.default);
 server.use("*", route_not_found_1.default);
 // Catch all middleware
 server.use(catch_all_1.default);
-server.listen(process.env.PORT || 3000, function () { return console.log("Listening on port: ".concat(process.env.PORT)); });
+server.listen(process.env.PORT || 3000, function () { return console.log("Listening on port: ".concat(process.env.PORT || 3000)); });
