@@ -2,6 +2,7 @@ class Config {
     public serverUrl = "http://ec2-18-183-6-194.ap-northeast-1.compute.amazonaws.com:3000/";
     public serverStaticsImages = this.serverUrl + "static/images/"
     public serverStaticsIcons = this.serverUrl + "static/icons/"
+    public serverStaticsGifs = this.serverUrl + "static/gifs/"
     public routes = {
         getAllVacations: this.serverUrl + "api/vacations/",
         getVacation: this.serverUrl + "api/vacation/",
